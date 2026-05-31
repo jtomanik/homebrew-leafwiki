@@ -12,9 +12,11 @@ This installs:
 
 - `leafwiki`
 - `leafwiki-local-mcp`
+- `run-mcp.sh`
 
 `leafwiki-local-mcp` is the local MCP STDIO bridge for MCP clients that spawn a
-local command.
+local command. `run-mcp.sh` starts a local LeafWiki MCP server and connects the
+STDIO bridge to it.
 
 You can also tap first and then install:
 
