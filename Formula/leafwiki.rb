@@ -1,15 +1,15 @@
 class Leafwiki < Formula
   desc "Fast self-hosted wiki with local MCP support"
   homepage "https://github.com/jtomanik/leafwiki"
-  version "0.11.0-dev.7e38b39"
+  version "0.11.0-dev.10947c1"
   license "MIT"
 
   if Hardware::CPU.arm?
-    url "https://github.com/jtomanik/leafwiki/releases/download/homebrew-v0.11.0-dev.7e38b39/leafwiki-0.11.0-dev.7e38b39-darwin-arm64.tar.gz"
-    sha256 "aa346040c4d0c0c0fa0663f7ffec9e72bd1156f9c33760e8627c0985d067b4e8"
+    url "https://github.com/jtomanik/leafwiki/releases/download/homebrew-v0.11.0-dev.10947c1/leafwiki-0.11.0-dev.10947c1-darwin-arm64.tar.gz"
+    sha256 "0f589595a45ef2b124c54a638bc83beba668cc84abda114c56bfd4cc260300ee"
   else
-    url "https://github.com/jtomanik/leafwiki/releases/download/homebrew-v0.11.0-dev.7e38b39/leafwiki-0.11.0-dev.7e38b39-darwin-amd64.tar.gz"
-    sha256 "63682faf9be3cf196ecac4d42f5da454949e43213520c3b70a6059b684486237"
+    url "https://github.com/jtomanik/leafwiki/releases/download/homebrew-v0.11.0-dev.10947c1/leafwiki-0.11.0-dev.10947c1-darwin-amd64.tar.gz"
+    sha256 "2d2a779fb882f4a2daff03cfcadb7d17af7cca3d3fa7e68dc4543839db9ee2b8"
   end
 
   def install
