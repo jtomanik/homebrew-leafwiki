@@ -11,10 +11,10 @@ brew install jtomanik/leafwiki/leafwiki
 This installs:
 
 - `leafwiki`
-- `run-mcp.sh`
+- `run.sh`
 
-`run-mcp.sh` starts LeafWiki in native MCP STDIO mode for MCP clients that spawn
-a local command.
+`run.sh mcp` starts LeafWiki in native MCP STDIO mode for MCP clients that spawn
+a local command. Workspace sync is enabled by default.
 
 You can also tap first and then install:
 
