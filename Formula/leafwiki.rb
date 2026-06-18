@@ -1,15 +1,15 @@
 class Leafwiki < Formula
   desc "Fast self-hosted wiki with local MCP support"
   homepage "https://github.com/jtomanik/leafwiki"
-  version "0.12.0-dev.20260618.8b8facf"
+  version "0.12.0-dev.20260618.a1fdb1b"
   license "MIT"
 
   if Hardware::CPU.arm?
-    url "https://github.com/jtomanik/leafwiki/releases/download/homebrew-v0.12.0-dev.20260618.8b8facf/leafwiki-0.12.0-dev.20260618.8b8facf-darwin-arm64.tar.gz"
-    sha256 "dc5a0dbc22b0be45fbc0c7d5f9217669a48b6f479f7067b691d6556675f319f7"
+    url "https://github.com/jtomanik/leafwiki/releases/download/homebrew-v0.12.0-dev.20260618.a1fdb1b/leafwiki-0.12.0-dev.20260618.a1fdb1b-darwin-arm64.tar.gz"
+    sha256 "e57e9c207d16cc0dc6fc6b60329f603610844b6b722b43e254418c4dea66aa73"
   else
-    url "https://github.com/jtomanik/leafwiki/releases/download/homebrew-v0.12.0-dev.20260618.8b8facf/leafwiki-0.12.0-dev.20260618.8b8facf-darwin-amd64.tar.gz"
-    sha256 "53b5b136739bd6cdcb436ad5fa0d434166c978e17aad48dc968680daeaffa339"
+    url "https://github.com/jtomanik/leafwiki/releases/download/homebrew-v0.12.0-dev.20260618.a1fdb1b/leafwiki-0.12.0-dev.20260618.a1fdb1b-darwin-amd64.tar.gz"
+    sha256 "be1e456ff48ead35f9ca0d2975e5539585fd6f0e9394d9b58f377a123b6ac9cc"
   end
 
   def install
@@ -48,6 +48,10 @@ class Leafwiki < Formula
 
   def caveats
     <<~EOS
+      Homebrew installs or upgrades LeafWiki, but it does not automatically start
+      or restart the background service. After installing or upgrading, run:
+        brew services restart jtomanik/leafwiki/leafwiki
+
       LeafWiki service config is stored at:
         ~/.leafwiki/leafwiki.yml
 
