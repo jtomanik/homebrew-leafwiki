@@ -3,6 +3,7 @@ class Leafwiki < Formula
   homepage "https://github.com/jtomanik/leafwiki"
   version "0.13.0-dev.20260623.00f89c9"
   license "MIT"
+  revision 1
 
   if Hardware::CPU.arm?
     url "https://github.com/jtomanik/leafwiki/releases/download/homebrew-v0.13.0-dev.20260623.00f89c9/leafwiki-0.13.0-dev.20260623.00f89c9-darwin-arm64.tar.gz"
@@ -27,6 +28,16 @@ class Leafwiki < Formula
         mkdir -p "${service_dir}"
         chmod 700 "${service_dir}"
         install -m 600 "#{opt_pkgshare}/leafwiki.service.example.yml" "${service_config}"
+      fi
+      if [[ -f "${service_config}" ]] && grep -Eq '^[[:space:]]*enable-workspace-sync[[:space:]]*:' "${service_config}"; then
+        backup_config="${service_config}.bak-0.13-workspace-sync"
+        if [[ ! -e "${backup_config}" ]]; then
+          cp -p "${service_config}" "${backup_config}"
+        fi
+        tmp_config="$(mktemp "${service_config}.tmp.XXXXXX")"
+        awk '!/^[[:space:]]*enable-workspace-sync[[:space:]]*:/' "${service_config}" > "${tmp_config}"
+        chmod 600 "${tmp_config}"
+        mv "${tmp_config}" "${service_config}"
       fi
 
       if [[ "${LEAFWIKI_SERVICE_BOOTSTRAP_ONLY:-0}" == "1" ]]; then
@@ -82,6 +93,12 @@ class Leafwiki < Formula
       system libexec/"leafwiki-service"
     end
     assert_match "disable-auth: true", (service_home/".leafwiki/leafwiki.yml").read
+    File.write(service_home/".leafwiki/leafwiki.yml", "disable-auth: true\nenable-workspace-sync: true\n")
+    with_env(HOME: service_home.to_s, LEAFWIKI_SERVICE_BOOTSTRAP_ONLY: "1") do
+      system libexec/"leafwiki-service"
+    end
+    refute_match "enable-workspace-sync:", (service_home/".leafwiki/leafwiki.yml").read
+    assert_match "enable-workspace-sync: true", (service_home/".leafwiki/leafwiki.yml.bak-0.13-workspace-sync").read
     dry_run = shell_output("#{bin}/run.sh mcp --dry-run --api-key test 2>&1")
     assert_match "--mcp=stdio", dry_run
     assert_match "descriptor-first attach", dry_run
