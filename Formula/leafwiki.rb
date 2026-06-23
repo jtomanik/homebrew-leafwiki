@@ -1,15 +1,15 @@
 class Leafwiki < Formula
   desc "Fast self-hosted wiki with local MCP support"
   homepage "https://github.com/jtomanik/leafwiki"
-  version "0.12.0-dev.20260619.42a7956"
+  version "0.13.0-dev.20260623.00f89c9"
   license "MIT"
 
   if Hardware::CPU.arm?
-    url "https://github.com/jtomanik/leafwiki/releases/download/homebrew-v0.12.0-dev.20260619.42a7956/leafwiki-0.12.0-dev.20260619.42a7956-darwin-arm64.tar.gz"
-    sha256 "10d537cd6b032a59ae6210636b27ca2cfc8a48dc95e06e2624cad641dba8e996"
+    url "https://github.com/jtomanik/leafwiki/releases/download/homebrew-v0.13.0-dev.20260623.00f89c9/leafwiki-0.13.0-dev.20260623.00f89c9-darwin-arm64.tar.gz"
+    sha256 "2ad109415982a95ec1714e1f13a8d25dc8cb91dde8f7ac10c413edf9d2bf4080"
   else
-    url "https://github.com/jtomanik/leafwiki/releases/download/homebrew-v0.12.0-dev.20260619.42a7956/leafwiki-0.12.0-dev.20260619.42a7956-darwin-amd64.tar.gz"
-    sha256 "01e1865ffa180b4b9062ac2b395b557c12284c286fbd5e441ad297d4bff0c8dd"
+    url "https://github.com/jtomanik/leafwiki/releases/download/homebrew-v0.13.0-dev.20260623.00f89c9/leafwiki-0.13.0-dev.20260623.00f89c9-darwin-amd64.tar.gz"
+    sha256 "712fab343cb884c8cb4a065d43fd86b1c60da793dd2a75abb68433527259e78f"
   end
 
   def install
@@ -84,7 +84,9 @@ class Leafwiki < Formula
     assert_match "disable-auth: true", (service_home/".leafwiki/leafwiki.yml").read
     dry_run = shell_output("#{bin}/run.sh mcp --dry-run --api-key test 2>&1")
     assert_match "--mcp=stdio", dry_run
-    assert_match "--enable-workspace-sync", dry_run
+    assert_match "descriptor-first attach", dry_run
+    assert_match "--daemon-idle-timeout 10m", dry_run
+    assert_match "LEAFWIKI_MCP_API_KEY=REDACTED", dry_run
     refute_match "leafwiki-local-mcp", dry_run
     refute_match "leafwiki-mcp-stdio", dry_run
   end
