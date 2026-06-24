@@ -1,21 +1,21 @@
 class Leafwiki < Formula
   desc "Fast self-hosted wiki with local MCP support"
   homepage "https://github.com/jtomanik/leafwiki"
-  version "0.13.0-dev.20260623.00f89c9"
+  version "0.14.0-dev.20260624.631bb99"
   license "MIT"
-  revision 1
 
   if Hardware::CPU.arm?
-    url "https://github.com/jtomanik/leafwiki/releases/download/homebrew-v0.13.0-dev.20260623.00f89c9/leafwiki-0.13.0-dev.20260623.00f89c9-darwin-arm64.tar.gz"
-    sha256 "2ad109415982a95ec1714e1f13a8d25dc8cb91dde8f7ac10c413edf9d2bf4080"
+    url "https://github.com/jtomanik/leafwiki/releases/download/homebrew-v0.14.0-dev.20260624.631bb99/leafwiki-0.14.0-dev.20260624.631bb99-darwin-arm64.tar.gz"
+    sha256 "f80ad2062c52765017c3d5eb177da10ab323a4a210162be6092bd9716e0920f8"
   else
-    url "https://github.com/jtomanik/leafwiki/releases/download/homebrew-v0.13.0-dev.20260623.00f89c9/leafwiki-0.13.0-dev.20260623.00f89c9-darwin-amd64.tar.gz"
-    sha256 "712fab343cb884c8cb4a065d43fd86b1c60da793dd2a75abb68433527259e78f"
+    url "https://github.com/jtomanik/leafwiki/releases/download/homebrew-v0.14.0-dev.20260624.631bb99/leafwiki-0.14.0-dev.20260624.631bb99-darwin-amd64.tar.gz"
+    sha256 "fa14a9adb727c0064d9902daaebe6cee11c63b171f164aa1e08ee48993be3536"
   end
 
   def install
     bin.install "leafwiki"
     bin.install "run.sh"
+    bin.install "run_messages.sh"
     pkgshare.install "config/leafwiki.service.example.yml"
 
     (libexec/"leafwiki-service").write <<~BASH
@@ -87,6 +87,7 @@ class Leafwiki < Formula
   test do
     assert_match "LeafWiki", shell_output("#{bin}/leafwiki --help 2>&1")
     assert_match "leafwiki daemon", shell_output("#{bin}/leafwiki daemon --help 2>&1")
+    assert_path_exists bin/"run_messages.sh"
     assert_match "disable-auth: true", (pkgshare/"leafwiki.service.example.yml").read
     service_home = testpath/"service-home"
     with_env(HOME: service_home.to_s, LEAFWIKI_SERVICE_BOOTSTRAP_ONLY: "1") do
